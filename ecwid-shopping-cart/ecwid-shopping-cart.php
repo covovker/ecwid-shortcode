@@ -47,11 +47,11 @@ function ecwid_shortcode($args) {
 		}
 	}
 
-	return $result;
+	return "<div>$result</div>";
 }
 
 
-function ecwid_get_arg($args, $name, $default = '') {
+function ecwid_get_arg($args, $name, $default = null) {
 	$value = $default;
 	if (is_array($args) && array_key_exists($name, $args)) {
 		$value = $args[$name];
@@ -64,6 +64,7 @@ function ecwid_get_arg($args, $name, $default = '') {
 function ecwid_get_widget_productbrowser($args = array()) {
 
 	$cats_per_row = intval(ecwid_get_arg($args,'categoriesperrow'));
+	
 	if ($cats_per_row > ECWID_MAX_CATEGORIES_PER_ROW || $cats_per_row < 1) {
 		$cats_per_row = ECWID_DEFAULT_CATEGORIES_PER_ROW;
 	}
@@ -71,19 +72,30 @@ function ecwid_get_widget_productbrowser($args = array()) {
 	$view = array();
 
 	$grid = ecwid_get_arg($args, 'grid');
-	if ($grid && count($sizes = explode(",", $grid)) == 2) {
-		$rows = intval($sizes[0]);
-		$cols = intval($sizes[1]);
+	if (!is_null($grid)) {
 		
 		$value = ECWID_DEFAULT_GRID_SIZE;
-		if ($rows <= ECWID_MAX_VIEW_ITEMS && $rows >= 1 && $cols <= ECWID_MAX_VIEW_ITEMS && $cols >= 1 && $rows * $cols <= ECWID_MAX_VIEW_ITEMS) {
-			$value = "$rows,$cols";
+		if (count($sizes = explode(",", $grid)) == 2) {
+	        $rows = intval($sizes[0]);
+	        $cols = intval($sizes[1]);
+
+			if (
+				$rows <= ECWID_MAX_VIEW_ITEMS 
+				&& $rows >= 1 
+				&& $cols <= ECWID_MAX_VIEW_ITEMS 
+				&& $cols >= 1 
+				&& $rows * $cols <= ECWID_MAX_VIEW_ITEMS
+			) {
+				$value = "$rows,$cols";
+			}
 		}
+
 		$views[]= "grid($value)";
 	}
 
-	$list = intval(ecwid_get_arg($args, 'list'));
-	if ($list) { 
+	$list = ecwid_get_arg($args, 'list');
+	if (!is_null($list)) { 
+		$list = intval($list);
 		if ($list < 1 || $list > ECWID_MAX_VIEW_ITEMS) {
 			$list = ECWID_DEFAULT_LIST_SIZE;
 		}
@@ -91,8 +103,9 @@ function ecwid_get_widget_productbrowser($args = array()) {
 		$views[] = "list($list)";
 	}
 
-	$table = intval(ecwid_get_arg($args, 'table'));
-	if ($table){ 
+	$table = ecwid_get_arg($args, 'table');
+	if (!is_null($table)){
+		$table = intval($table);
 		if ($table < 1 || $table > ECWID_MAX_VIEW_ITEMS) {
 			$table = ECWID_DEFAULT_TABLE_SIZE;
 		}
@@ -118,12 +131,19 @@ function ecwid_get_widget_productbrowser($args = array()) {
 	}
 
 	$responsive = ecwid_get_arg($args, 'responsive');
-	if ($responsive) {
-		$responsive = ', "responsive=yes"';
+	if (!is_null($responsive)) {
+		$responsive = ',"responsive=yes"';
+	}
+
+	$default_cat = intval(ecwid_get_arg($args, 'defaultcategoryid'));
+	if ($default_cat) {
+		$default_cat = ',"defaultCategoryId=' . $default_cat . '"';
+	} else {
+		$default_cat = '';
 	}
 
 	$result = <<<HTML
-<script type="text/javascript"> xProductBrowser("categoriesPerRow=$cats_per_row","views=$views","categoryView=$cat_view","searchView=$search_view","style="$responsive); </script> 
+<script type="text/javascript"> xProductBrowser("categoriesPerRow=$cats_per_row","views=$views","categoryView=$cat_view","searchView=$search_view","style="$responsive$default_cat); </script> 
 HTML;
 
 	return $result;
