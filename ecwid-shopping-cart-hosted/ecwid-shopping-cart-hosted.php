@@ -41,7 +41,7 @@ function ecwid_shortcode($args) {
 	$widgets = explode(' ', ecwid_get_arg($args, 'widgets', 'productbrowser'));
 	foreach ($widgets as $widget) {
 		$widget = trim($widget);
-		if (in_array($widget, array('productbrowser'))) {
+		if (in_array($widget, array('productbrowser', 'categories', 'vcategories', 'search', 'minicart'))) {
 			$getter = "ecwid_get_widget_$widget";
 			$result .= $getter($args);
 		}
@@ -150,5 +150,51 @@ HTML;
 
 	return $result;
 }
+
+function ecwid_get_widget_minicart($args) {
+
+	$layout_code = '';
+	
+	$layout = ecwid_get_arg($args, 'layout');
+	if (in_array($layout, array('attachToCategories', 'floating', 'Mini', 'MiniAttachToProductBrowser'))) {
+		$layout_code = ',"layout=' . $layout . '"';
+	}
+
+    $result = <<<HTML
+    <script type="text/javascript"> xMinicart("style="$layout_code);</script>
+HTML;
+
+    return $result;
+}
+
+
+function ecwid_get_widget_categories($args) {
+
+    $result = <<<HTML
+	<script type="text/javascript"> xCategories("style=");</script>
+HTML;
+
+	return $result;
+}
+
+function ecwid_get_widget_vcategories($args) {
+
+    $result = <<<HTML
+    <script type="text/javascript"> xVCategories("style=");</script>
+HTML;
+
+    return $result;
+}
+
+
+function ecwid_get_widget_search($args) {
+
+    $result = <<<HTML
+    <script type="text/javascript"> xSearchPanel("style=");</script>
+HTML;
+
+    return $result;
+}
+
 
 ?>
