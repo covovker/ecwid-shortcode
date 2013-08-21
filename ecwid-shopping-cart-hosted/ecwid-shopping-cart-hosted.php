@@ -27,7 +27,7 @@ if (!is_admin()) {
 
 function ecwid_shortcode($args) {
 
-	$result = '';
+	$result = '<div>';
 
 	if (!defined('ECWID_SCRIPTJS')) {
 		$store_id = intval(ecwid_get_arg($args, 'id'));
@@ -36,7 +36,7 @@ function ecwid_shortcode($args) {
 		}
 		$result .= "<script type=\"text/javascript\" src=\"//" . ECWID_URL . "/script.js?$store_id\"></script>";
 		define('ECWID_SCRIPTJS','Yep');
-	} 
+	}
 
 	$widgets = explode(' ', ecwid_get_arg($args, 'widgets', 'productbrowser'));
 	foreach ($widgets as $widget) {
@@ -47,7 +47,9 @@ function ecwid_shortcode($args) {
 		}
 	}
 
-	return "<div>$result</div>";
+	$result .= '</div>';
+
+	return $result;
 }
 
 
