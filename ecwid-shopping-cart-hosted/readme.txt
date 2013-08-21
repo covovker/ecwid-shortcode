@@ -1,5 +1,4 @@
 === Ecwid Shopping Cart Hosted ===
-Contributors: Ecwid Team
 Tags: shopping cart, ecommerce, e-commerce, paypal, google checkout, 2checkout, store, shop, product catalog, inventory
 Requires at least: 3.6
 Tested up to: 3.6
@@ -29,11 +28,6 @@ Links
 - You can see the demo there: [www.ecwid.com/demo-frontend.html](http://www.ecwid.com/demo-frontend.html)
 - More features:
 [www.ecwid.com/key-features.html](http://www.ecwid.com/key-features.html)
-
-== Frequently Asked Questions ==
-
-- FAQ: [http://www.ecwid.com/faq.html](http://www.ecwid.com/faq.html)
-- Knowledge Base: [http://kb.ecwid.com](http://kb.ecwid.com)
 
 == Changelog ==
 
