@@ -50,7 +50,7 @@ store content. Here are the parameters of this shortcode:
   The default category to be displayed. If none specified, the product browser opens the root category of the store. Please, refer to this page for more information about this parameter: http://kb.ecwid.com/w/page/15853258/Default%20category%20for%20product%20browser
 
 So, an easy start from scratch having all parameters on hand would be to use the following shortcode:
-[ecwid id="1003" grid="(5,5)" list="5" table="10" categoryview="table" searchview="list" defaultcategoryid="3002" layout="floating" widgets="search categories productbrowser minicart"]
+[ecwid id="1003" grid="5,5" list="5" table="10" categoryview="table" searchview="list" defaultcategoryid="3002" layout="floating" widgets="search categories productbrowser minicart"]
 Note that this shortcode does not have the vertical categories widget because in most cases it is better to be put separately in a side menu.
 
 == Changelog ==
