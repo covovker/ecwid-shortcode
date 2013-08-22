@@ -41,7 +41,7 @@ store content. Here are the parameters of this shortcode:
 - list (for productbrowser only)
   The number of items in the list view of the product browser widget. The default value is 10. If not specified, then the list view will not be available in the product browser view.
 - table (for productbrowser only)
-  The number of rows in the table viewof the product browser widget. The default value is 20. If not specified, then the list view will not be available in the product browser view.
+  The number of rows in the table viewof the product browser widget. The default value is 20. If not specified, then the table view will not be available in the product browser view.
 - categoryview (for productbrowser only)
   The default view for products in categories. Possible values are: list, grid, table. The default value is grid.
 - searchview (for productbrowser only)
