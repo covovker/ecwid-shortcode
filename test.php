@@ -269,7 +269,7 @@ check_productbrowser(
     array('list' => '125'),
     array(
         "categoriesPerRow=3",
-        "views=list(3)",
+        "views=list(10)",
         "categoryView=grid",
         "searchView=grid",
         "style="
@@ -281,7 +281,7 @@ check_productbrowser(
     array('list' => '0'),
     array(
         "categoriesPerRow=3",
-        "views=list(3)",
+        "views=list(10)",
         "categoryView=grid",
         "searchView=grid",
         "style="
@@ -293,7 +293,7 @@ check_productbrowser(
     array('list' => '-1'),
     array(
         "categoriesPerRow=3",
-        "views=list(3)",
+        "views=list(10)",
         "categoryView=grid",
         "searchView=grid",
         "style="
@@ -305,7 +305,7 @@ check_productbrowser(
     array('list' => 'asdasd"'),
     array(
         "categoriesPerRow=3",
-        "views=list(3)",
+        "views=list(10)",
         "categoryView=grid",
         "searchView=grid",
         "style="
@@ -331,7 +331,7 @@ check_productbrowser(
     array('table' => '125'),
     array(
         "categoriesPerRow=3",
-        "views=table(3)",
+        "views=table(20)",
         "categoryView=grid",
         "searchView=grid",
         "style="
@@ -343,7 +343,7 @@ check_productbrowser(
     array('table' => '0'),
     array(
         "categoriesPerRow=3",
-        "views=table(3)",
+        "views=table(20)",
         "categoryView=grid",
         "searchView=grid",
         "style="
@@ -355,7 +355,7 @@ check_productbrowser(
     array('table' => '-1'),
     array(
         "categoriesPerRow=3",
-        "views=table(3)",
+        "views=table(20)",
         "categoryView=grid",
         "searchView=grid",
         "style="
@@ -367,7 +367,7 @@ check_productbrowser(
     array('table' => 'asdasd"'),
     array(
         "categoriesPerRow=3",
-        "views=table(3)",
+        "views=table(20)",
         "categoryView=grid",
         "searchView=grid",
         "style="
@@ -569,6 +569,6 @@ check_productbrowser(
 );
 // }}}
 
-echo "all tests ok";
+echo "all tests ok\n";
 
 ?>
