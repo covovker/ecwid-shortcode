@@ -1,6 +1,6 @@
 === Ecwid Shopping Cart Hosted ===
 Tags: shopping cart, ecommerce, e-commerce, paypal, google checkout, 2checkout, store, shop, product catalog, inventory
-Requires at least: 3.6
+Requires at least: 2.8
 Tested up to: 3.6
 Stable tag: 0.1
 
@@ -23,11 +23,35 @@ There are eight key advantages to Ecwid:
   shopping carts regardless the hosting service you use.
 - Seamless upgrades. You just wake up one day and enjoy new features.
 
-Links
-
 - You can see the demo there: [www.ecwid.com/demo-frontend.html](http://www.ecwid.com/demo-frontend.html)
 - More features:
 [www.ecwid.com/key-features.html](http://www.ecwid.com/key-features.html)
+
+This plugin adds [ecwid] shortcode to WordPress. Putting this shortcode without parameters produces the Ecwid Product Browser widget that displays demo
+store content. Here are the parameters of this shortcode:
+- id
+  Ecwid store ID.
+  If none specified, the widget displays Ecwid demo store content.
+- widgets
+  The list of widgets to display for this short code entry. Possible values are: productbrowser, categories, vcategories, minicart, search. Also one can specify several widgets like this: "search categories productbrowser". If none specified, the shortcode displays product browser widget. You can learn more about ecwid widgets here: http://kb.ecwid.com/w/page/15853259/Ecwid%20widgets
+- layout (for minicart only)
+  The minicart widget layout. Possible values are: attachToCategories, floating, Mini, MiniAttachToProductBrowser. If none specified, the minicart widget is displayed in its default layout. Here is the description of these layouts: http://kb.ecwid.com/w/page/15853298/Minicart
+- grid (for productbrowser only)
+  The number of columns and rows for the grid view of the product browser widget separated by comma. The default value is "3,3". If none specified, then the grid view will not be available in the product browser view.
+- list (for productbrowser only)
+  The number of items in the list view of the product browser widget. The default value is 10. If not specified, then the list view will not be available in the product browser view.
+- table (for productbrowser only)
+  The number of rows in the table viewof the product browser widget. The default value is 20. If not specified, then the list view will not be available in the product browser view.
+- categoryview (for productbrowser only)
+  The default view for products in categories. Possible values are: list, grid, table. The default value is grid.
+- searchview (for productbrowser only)
+  The default view for search results. Possible values are: list, grid, table. The default value is grid.
+- defaultcategoryid (for productbrowser only)
+  The default category to be displayed. If none specified, the product browser opens the root category of the store. Please, refer to this page for more information about this parameter: http://kb.ecwid.com/w/page/15853258/Default%20category%20for%20product%20browser
+
+So, an easy start from scratch having all parameters on hand would be to use the following shortcode:
+[ecwid id="1003" grid="(5,5)" list="5" table="10" categoryview="table" searchview="list" defaultcategoryid="3002" layout="floating" widgets="search categories productbrowser minicart"]
+Note that this shortcode does not have the vertical categories widget because in most cases it is better to be put separately in a side menu.
 
 == Changelog ==
 
