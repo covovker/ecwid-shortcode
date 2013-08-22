@@ -40,7 +40,7 @@ function ends_with($needle, $haystack) {
 
 // }}}
 
-include "./ecwid-shopping-cart/ecwid-shopping-cart.php";
+include "./ecwid-shopping-cart-hosted/ecwid-shopping-cart-hosted.php";
 
 // {{{ test div...script...js?shopid.. div wrapping
 if (!preg_match('!\s*<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?12345"></script>.*\s*</div>\s*!', $code = ecwid_shortcode(array('id' => 12345)))) {
