@@ -1,4 +1,4 @@
-=== Ecwid Shopping Cart Hosted ===
+=== Ecwid Shopping Cart Shortcode ===
 Tags: shopping cart, ecommerce, e-commerce, paypal, google checkout, 2checkout, store, shop, product catalog, inventory
 Requires at least: 2.8
 Tested up to: 3.6
