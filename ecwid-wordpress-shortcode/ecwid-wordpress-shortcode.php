@@ -27,14 +27,14 @@ if (!is_admin()) {
 
 function ecwid_shortcode($args) {
 
-	$result = '<div>';
+	$result = '';
 
 	if (!defined('ECWID_SCRIPTJS')) {
 		$store_id = intval(ecwid_get_arg($args, 'id'));
 		if (!$store_id) {
-			$store_id = ECWID_DEMO_STORE_ID;
+			$args['id'] = $store_id = ECWID_DEMO_STORE_ID;
 		}
-		$result .= "<script type=\"text/javascript\" src=\"//" . ECWID_URL . "/script.js?$store_id\"></script>";
+		$result .= "<div><script type=\"text/javascript\" src=\"//" . ECWID_URL . "/script.js?$store_id\"></script>";
 		define('ECWID_SCRIPTJS','Yep');
 	}
 
@@ -133,19 +133,12 @@ function ecwid_get_widget_productbrowser($args = array()) {
 	}
 
 	$responsive = ecwid_get_arg($args, 'responsive');
-	if (!is_null($responsive)) {
-		$responsive = ',"responsive=yes"';
-	}
+	$responsive = $responsive == 'yes' ? 'yes' : 'no';
 
 	$default_cat = intval(ecwid_get_arg($args, 'defaultcategoryid'));
-	if ($default_cat) {
-		$default_cat = ',"defaultCategoryId=' . $default_cat . '"';
-	} else {
-		$default_cat = '';
-	}
 
 	$result = <<<HTML
-<script type="text/javascript"> xProductBrowser("categoriesPerRow=$cats_per_row","views=$views","categoryView=$cat_view","searchView=$search_view","style="$responsive$default_cat); </script> 
+<script type="text/javascript"> xProductBrowser("categoriesPerRow=$cats_per_row","views=$views","categoryView=$cat_view","searchView=$search_view","style=","defaultCategoryId=$default_cat","responsive=$responsive"); </script> 
 HTML;
 
 	return $result;
@@ -235,60 +228,102 @@ function ecwid_shortcode_build_short_code($type, $id, $other_args) {
 
 function ecwid_shortcode_replace_product_browser($input) {
     $matches = array();
-    $match_expression = '#<div id="my-store-.*?</div>\s*<div>\s*<script type="text/javascript" src="http://app.ecwid.com/script.js\?([0-9]*)".*?<script type="text/javascript"> xProductBrowser\("categoriesPerRow=([^"]*)","views=([^"]*)","categoryView=([^"]*)","searchView=([^"]*)"[^)]*\);\s*</script>\s*</div>#s';
+    $match_expressions = array(
+		// The one in ecwid control panel dashboard
+		array(
+			'expression' => '#<div id="my-store-.*?</div>\s*<div>\s*<script type="text/javascript" src="http://app.ecwid.com/script.js\?([0-9]*)"[^>]*>\s*</script>\s*<script type="text/javascript"> xProductBrowser\("categoriesPerRow=([^"]*)","views=([^"]*)","categoryView=([^"]*)","searchView=([^"]*)"[^)]*\);\s*</script>\s*</div>#s',
+			'args' => array('id', 'categoriesperrow', 'views', 'categoryview', 'searchview')
+		),
+		array(
+			'expression' => '#<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?([^"]*)">\s*</script>\s*<script type="text/javascript">\s*xProductBrowser\("categoriesPerRow=([^"]*)"\s*,\s*"views=([^"]*)"\s*,\s*"categoryView=([^"]*)"\s*,\s*"searchView=([^"]*)"\s*,\s*"style="\s*,\s*"defaultCategoryId=([^"]*)"\s*,\s*"responsive=([^"]*)"\s*\);\s*</script>\s*</div>#',
+			'args' => array('id', 'categoriesperrow', 'views', 'categoryview', 'searchview', 'defaultcategoryid', 'responsive')
+		)
+	);
+		
 
-    if (!preg_match($match_expression, $input, $matches)) {
-        return false;
+	$found = false;
+	foreach ($match_expressions as $ind => $item) {
+	    if (preg_match($item['expression'], $input, $matches)) {
+	        $found = $item;
+			break;
+		}
     }
+	if (!$found) {
+		return false;
+	}
 
-    $args = array();
+	$args = array();
 
-    list (, $args['id'], $args['categoriesperrow'], $views, $args['categoryview'], $args['searchview']) = $matches;
+	foreach ($found['args'] as $ind => $arg) {
+		$args[$arg] = $matches[$ind + 1];// one for match[0] that is full string
+	}
 
-    $views = explode(' ', $views);
-    foreach ($views as $view) {
-        $matches = array();
-        if (preg_match('!grid\(([0-9]*),([0-9]*)\)!', $view, $matches)) {
-            $args['grid'] = "$matches[1],$matches[2]";
-        } elseif (preg_match('!list\(([0-9]*)\)!', $view, $matches)) {
-            $args['list'] = $matches[1];
-        } elseif (preg_match('!table\(([0-9]*)\)!', $view, $matches)) {
-            $args['table'] = $matches[1];
-        }
-    }
+	if ($args['views']) {
+		$views = explode(' ', $args['views']);
+		foreach ($views as $view) {
+			$matches = array();
+			if (preg_match('!grid\(([0-9]*),([0-9]*)\)!', $view, $matches)) {
+				$args['grid'] = "$matches[1],$matches[2]";
+			} elseif (preg_match('!list\(([0-9]*)\)!', $view, $matches)) {
+				$args['list'] = $matches[1];
+			} elseif (preg_match('!table\(([0-9]*)\)!', $view, $matches)) {
+				$args['table'] = $matches[1];
+			}
+		}
+		
+		unset($args['views']);
+	}
 
     $short_code = ecwid_shortcode_build_short_code("productbrowser", $args['id'], $args);
 
-    return preg_replace($match_expression, $short_code, $input, 1);
+    return preg_replace($found['expression'], $short_code, $input, 1);
 }
 
 function ecwid_shortcode_replace_minicart($input) {
     $matches = array();
-    $match_expression = '#<div>\s*<script type="text/javascript" src="http://app.ecwid.com/script.js\?([0-9]*)"[^>]*?</script>\s*<!-- remove layout parameter if you want to position minicart yourself -->\s*<script type="text/javascript">\s*xMinicart\("style=","layout=([^"]*)"\);\s*</script>\s*?</div>#s';
+    $match_expressions = array(
+		'#<div>\s*<script type="text/javascript" src="http://app.ecwid.com/script.js\?([^"]*)" charset="utf-8"></script>\s*<!-- remove layout parameter if you want to position minicart yourself -->\s*<script type="text/javascript"> xMinicart\("style=","layout=([^"]*)"\);\s*</script>\s*</div>#s',
+		'#<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?([0-9]*)"[^>]*?\s*>\s*</script>\s*<script type="text/javascript">\s*xMinicart\("style=","layout=([^"]*)"\);\s*</script>\s*</div>#s'
+	);
 
-    if (!preg_match($match_expression, $input, $matches)) {
-        return false;
-    }
+	$found = false;
+	foreach ($match_expressions as $ind => $expression) {
+	    if (preg_match($expression, $input, $matches)) {
+			$found = $expression;
+    	    break;
+	    }
+	}
+
+	if (!$found) {
+		return false;
+	}
 
     $short_code = ecwid_shortcode_build_short_code("minicart", $matches[1], array('layout' => $matches[2]));
 
-    return preg_replace($match_expression, $short_code, $input, 1);
+    return preg_replace($found, $short_code, $input, 1);
 }
 
 function ecwid_shortcode_replace_generic($input, $function, $widget) {
     $matches = array();
 
-    $match_expression = '#<div>\s*<script type="text/javascript" src="http://app.ecwid.com/script.js\?([0-9]*)" charset="utf-8"></script>\s*<script type="text/javascript"> ' . $function . '[^<]*</script>\s*</div>#s';
+    $match_expressions = array(
+		'#<div>\s*<script type="text/javascript" src="http://app.ecwid.com/script.js\?([0-9]*)"[^>]*>\s*</script>\s*<script type="text/javascript"> ' . $function . '[^<]*</script>\s*</div>#s',
+		'#<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?([0-9]*)"></script>\s*<script type="text/javascript">\s*' . $function . '\("style="\);\s*</script>\s*</div>#',
+	);
 
-    if (!preg_match($match_expression, $input, $matches)) {
-        return false;
-    }
+	$found = false;
+	foreach ($match_expressions as $ind => $expression) {
+	    if (preg_match($expression, $input, $matches)) {
+			$found = $expression;
+			break;
+	    }
+	}
+
+	if(!$found) return false;
 
     $short_code = ecwid_shortcode_build_short_code($widget, $matches[1], array());
 
-    return preg_replace($match_expression, $short_code, $input, 1);
+    return preg_replace($found, $short_code, $input, 1);
 }
-
-
 
 ?>
