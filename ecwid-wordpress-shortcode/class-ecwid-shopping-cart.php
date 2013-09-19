@@ -257,7 +257,7 @@ class Ecwid_Shopping_Cart {
 		$result = $default;
 
 		$sizes = explode( ",", $value );
-		if ( count( $sizes ) == 2 ) {
+		if ( 2 == count( $sizes ) ) {
 			$rows = intval( $sizes[0] );
 			$cols = intval( $sizes[1] );
 
