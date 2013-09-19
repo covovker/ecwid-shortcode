@@ -2,7 +2,7 @@
 Tags: shopping cart, ecommerce, e-commerce, paypal, google checkout, 2checkout, store, shop, product catalog, inventory
 Requires at least: 2.8
 Tested up to: 3.6
-Stable tag: 0.1
+Stable tag: 0.2
 
 Ecwid is a free full-featured shopping cart that can easily be added to any blog
 and takes less than 5 minutes to set up.
@@ -42,18 +42,22 @@ store content. Here are the parameters of this shortcode:
   The number of items in the list view of the product browser widget. The default value is 10. If not specified, then the list view will not be available in the product browser view.
 - table (for productbrowser only)
   The number of rows in the table viewof the product browser widget. The default value is 20. If not specified, then the table view will not be available in the product browser view.
-- categoryview (for productbrowser only)
+- category_view (for productbrowser only)
   The default view for products in categories. Possible values are: list, grid, table. The default value is grid.
-- searchview (for productbrowser only)
+- search_view (for productbrowser only)
   The default view for search results. Possible values are: list, grid, table. The default value is grid.
-- defaultcategoryid (for productbrowser only)
+- default_category_id (for productbrowser only)
   The default category to be displayed. If none specified, the product browser opens the root category of the store. Please, refer to this page for more information about this parameter: http://kb.ecwid.com/w/page/15853258/Default%20category%20for%20product%20browser
+- responsive (for productbrowser only)
+  Whether to use the product browser responsive design feature. Possible values are: yes, no. The default value is "yes".
 
 So, an easy start from scratch having all parameters on hand would be to use the following shortcode:
-[ecwid id="1003" grid="5,5" list="5" table="10" categoryview="table" searchview="list" defaultcategoryid="3002" layout="floating" widgets="search categories productbrowser minicart"]
+[ecwid id="1003" grid="5,5" list="5" table="10" category_view="table" search_view="list" default_category_id="3002" layout="floating" widgets="search categories productbrowser minicart"]
 Note that this shortcode does not have the vertical categories widget because in most cases it is better to be put separately in a side menu.
 
 == Changelog ==
 
+= 0.2 =
+- Code refactoring and code style changes
 = 0.1 =
-- [+] Initial version
+- Initial version

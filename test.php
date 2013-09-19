@@ -10,6 +10,24 @@ function is_admin() {
 function add_shortcode() {
 	return false;
 }
+
+function plugin_dir_path($arg) {
+	return __DIR__ . '/ecwid-wordpress-shortcode';
+}
+
+function shortcode_atts( $pairs, $atts, $shortcode = '' ) {
+        $atts = (array)$atts;
+        $out = array();
+        foreach($pairs as $name => $default) {
+                if ( array_key_exists($name, $atts) )
+                        $out[$name] = $atts[$name];
+                else
+                        $out[$name] = $default;
+        }
+	
+        return $out;
+}
+
 // }}}
 
 // {{{ test framework %)
@@ -42,19 +60,24 @@ function ends_with($needle, $haystack) {
 
 include "./ecwid-wordpress-shortcode/ecwid-wordpress-shortcode.php";
 
+$ecwid = new Ecwid_Shopping_Cart();
+
+
 // {{{ test div...script...js?shopid.. div wrapping
-if (!preg_match('!\s*<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?12345"></script>.*\s*</div>\s*!', $code = ecwid_shortcode(array('id' => 12345)))) {
-	die('failed wrapping: ' . $code);
+if (!preg_match('!\s*<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?12345"></script>.*\s*</div>\s*!', $code = $ecwid->shortcode(array('id' => 12345)))) {
+	die("failed wrapping: \n" . $code . "\n");
 }
 
-if (preg_match('!\s*<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?1003"></script>.*\s*</div>\s*!', $code = ecwid_shortcode(array('id' => 12345)))) {
+if (preg_match('!\s*<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?1003"></script>.*\s*</div>\s*!', $code = $ecwid->shortcode(array('id' => 12345)))) {
     die("failed remembering script was included before");
 }
 // }}}
 
 // {{{ product browser specific functions
 function get_productbrowser_args($args = array()) {
-	$code = trim(ecwid_get_widget_productbrowser($args));
+	global $ecwid;
+
+	$code = trim($ecwid->shortcode($args));
 
 	$regexp = '!<script type="text/javascript">\s*xProductBrowser\((.*)\); </script>!';
 
@@ -97,6 +120,7 @@ check_productbrowser(
 		"categoryView=grid", 
 		"searchView=grid",
 		"style=",
+		"responsive=yes"
 	), 
 	"check no params"
 );
@@ -104,37 +128,40 @@ check_productbrowser(
 
 // {{{ cats per row
 check_productbrowser(
-    array('categoriesperrow' => 12), 
+    array('categories_per_row' => 12), 
     array(
         "categoriesPerRow=12", 
         "views=", 
         "categoryView=grid", 
         "searchView=grid", 
-        "style="
+        "style=",
+        "responsive=yes"
     ),  
     "check valid cats per wow"
 );  
 
 check_productbrowser(
-    array('categoriesperrow' => -1),
+    array('categories_per_row' => -1),
     array(
         "categoriesPerRow=3",
         "views=", 
         "categoryView=grid", 
         "searchView=grid", 
-        "style="
+        "style=",
+        "responsive=yes"
     ),  
     "check negative cats per tow"
 );
 
 check_productbrowser(
-    array('categoriesperrow' => "abc yahoo!"),
+    array('categories_per_row' => "abc yahoo!"),
     array(
         "categoriesPerRow=3",
         "views=", 
         "categoryView=grid", 
         "searchView=grid", 
-        "style="
+        "style=",
+        "responsive=yes"
     ),  
     "check invalid cats per tow"
 );
@@ -150,7 +177,8 @@ check_productbrowser(
         "views=grid(5,5)", 
         "categoryView=grid", 
         "searchView=grid", 
-        "style="
+        "style=",
+        "responsive=yes"
     ),  
     "check valid grid"
 );
@@ -162,7 +190,8 @@ check_productbrowser(
         "views=grid(3,3)",
         "categoryView=grid", 
         "searchView=grid", 
-        "style="
+        "style=",
+        "responsive=yes"
     ),  
     "check too big grid"
 );
@@ -174,7 +203,8 @@ check_productbrowser(
         "views=grid(3,3)",
         "categoryView=grid", 
         "searchView=grid", 
-        "style="
+        "style=",
+        "responsive=yes"
     ),  
     "check one param grid"
 );
@@ -186,7 +216,8 @@ check_productbrowser(
         "views=grid(3,3)",
         "categoryView=grid", 
         "searchView=grid", 
-        "style="
+        "style=",
+        "responsive=yes"
     ),  
     "check empty grid"
 );
@@ -198,7 +229,8 @@ check_productbrowser(
         "views=grid(3,3)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check invalid first arg grid"
 );
@@ -210,7 +242,8 @@ check_productbrowser(
         "views=grid(3,3)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check invalid second arg grid"
 );
@@ -222,7 +255,8 @@ check_productbrowser(
         "views=grid(3,3)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check zero grid"
 );
@@ -234,7 +268,8 @@ check_productbrowser(
         "views=grid(3,3)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check 0x1 grid"
 );
@@ -246,7 +281,8 @@ check_productbrowser(
         "views=grid(3,3)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check 1x0 grid"
 );
@@ -260,7 +296,8 @@ check_productbrowser(
         "views=list(25)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check good list"
 );
@@ -272,7 +309,8 @@ check_productbrowser(
         "views=list(10)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check too big list"
 );
@@ -284,7 +322,8 @@ check_productbrowser(
         "views=list(10)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check empty list"
 );
@@ -296,7 +335,8 @@ check_productbrowser(
         "views=list(10)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),  
     "check bad list"
 );
@@ -308,7 +348,8 @@ check_productbrowser(
         "views=list(10)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),  
     "check bad list #2"
 );
@@ -322,7 +363,8 @@ check_productbrowser(
         "views=table(25)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),  
     "check good table"
 );  
@@ -334,7 +376,8 @@ check_productbrowser(
         "views=table(20)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check too big table"
 );
@@ -346,7 +389,8 @@ check_productbrowser(
         "views=table(20)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check empty table"
 );
@@ -358,7 +402,8 @@ check_productbrowser(
         "views=table(20)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check bad table"
 );
@@ -370,7 +415,8 @@ check_productbrowser(
         "views=table(20)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check bad table #2"
 );
@@ -384,7 +430,8 @@ check_productbrowser(
         "views=grid(6,8) list(5) table(15)",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check all three valid views"
 );
@@ -392,61 +439,66 @@ check_productbrowser(
 
 // {{{ category view
 check_productbrowser(
-    array('categoryview' => 'grid'),
+    array('category_view' => 'grid'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check default category view"
 );
 
 check_productbrowser(
-    array('categoryview' => 'list'),
+    array('category_view' => 'list'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=list",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check list category view"
 );
 
 check_productbrowser(
-    array('categoryview' => 'table'),
+    array('category_view' => 'table'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=table",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check table category view"
 );
 
 check_productbrowser(
-    array('categoryview' => 'incorrect'),
+    array('category_view' => 'incorrect'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check incorrect category view"
 );
 
 check_productbrowser(
-    array('categoryview' => 'asdasd"'),
+    array('category_view' => 'asdasd"'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check incorrect category view #2"
 );
@@ -454,67 +506,98 @@ check_productbrowser(
 
 // {{{ search view
 check_productbrowser(
-    array('searchview' => 'grid'),
+    array('search_view' => 'grid'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check default search view"
 );
 
 check_productbrowser(
-    array('searchview' => 'list'),
+    array('search_view' => 'list'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
         "searchView=list",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check list search view"
 );
 
 check_productbrowser(
-    array('searchview' => 'table'),
+    array('search_view' => 'table'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
         "searchView=table",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check table search view"
 );
 
 check_productbrowser(
-    array('searchview' => 'incorrect'),
+    array('search_view' => 'incorrect'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check incorrect search view"
 );
 
 check_productbrowser(
-    array('searchview' => 'asdasd"'),
+    array('search_view' => 'asdasd"'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
         "searchView=grid",
-        "style="
+        "style=",
+        "responsive=yes"
     ),
     "check incorrect search view #2"
 );
 // }}}
 
 // {{{ responsive
+
+check_productbrowser(
+    array('responsive' => 'yes'),
+    array(
+        "categoriesPerRow=3",
+        "views=",
+        "categoryView=grid",
+        "searchView=grid",
+        "style=",
+	"responsive=yes"
+    ),
+    "check yes responsive"
+);
+
+check_productbrowser(
+    array('responsive' => 'no'),
+    array(
+        "categoriesPerRow=3",
+        "views=",
+        "categoryView=grid",
+        "searchView=grid",
+        "style=",
+    ),
+    "check no responsive"
+);
+
 check_productbrowser(
     array('responsive' => ''),
     array(
@@ -523,9 +606,9 @@ check_productbrowser(
         "categoryView=grid",
         "searchView=grid",
         "style=",
-		"responsive=yes"
+	"responsive=yes"
     ),
-    "check responsive"
+    "check empty responsive"
 );
 
 check_productbrowser(
@@ -536,7 +619,7 @@ check_productbrowser(
         "categoryView=grid",
         "searchView=grid",
         "style=",
-        "responsive=yes"
+	"responsive=yes"
     ),
     "check bad responsive"
 );
@@ -544,26 +627,28 @@ check_productbrowser(
 
 // {{{ default category id
 check_productbrowser(
-    array('defaultcategoryid' => '123456'),
+    array('default_category_id' => '123456'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
         "searchView=grid",
         "style=",
+        "responsive=yes",
         "defaultCategoryId=123456"
     ),
     "check good default category id"
 );
 
 check_productbrowser(
-    array('defaultcategoryid' => 'abcdef'),
+    array('default_category_id' => 'abcdef'),
     array(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
         "searchView=grid",
         "style=",
+        "responsive=yes"
     ),
     "check bad default category id"
 );
