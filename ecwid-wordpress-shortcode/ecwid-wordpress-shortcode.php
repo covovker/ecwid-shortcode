@@ -8,12 +8,12 @@ Version: 0.2
 Author URI: http://www.ecwid.com/
 */
 
-if (!is_admin()) {
-    add_shortcode('ecwid', 'ecwid_shortcode');
+if ( ! is_admin() ) {
+	add_shortcode( 'ecwid', 'ecwid_shortcode' );
 }
 
 if ( ! defined( 'ECWID_PLUGIN_DIR' ) ) {
-  define( 'ECWID_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+	define( 'ECWID_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 }
 
 require_once ECWID_PLUGIN_DIR . "/class-ecwid-shopping-cart.php";

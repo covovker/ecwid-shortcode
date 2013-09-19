@@ -42,17 +42,17 @@ class Ecwid_Shopping_Cart {
 	public function shortcode( $attr ) {
 		$args = shortcode_atts(
 			array(
-				'id'                   => self::demo_store_id,
-				'widgets'              => 'productbrowser',
-				'categories_per_row'   => self::default_categories_per_row,
-				'search_view'          => self::default_search_view,
-				'category_view'        => self::default_category_view,
-				'responsive'           => 'yes',
-				'default_category_id'  => 0,
+				'id'                  => self::demo_store_id,
+				'widgets'             => 'productbrowser',
+				'categories_per_row'  => self::default_categories_per_row,
+				'search_view'         => self::default_search_view,
+				'category_view'       => self::default_category_view,
+				'responsive'          => 'yes',
+				'default_category_id' => 0,
 				// grid, list and table are not reset to defaults because if one does not specify them, then the products view does not include that type of display
-				'grid'              => null,
-				'table'             => null,
-				'list'              => null,
+				'grid'                => null,
+				'table'               => null,
+				'list'                => null,
 			),
 			$attr,
 			'ecwid'
@@ -164,7 +164,7 @@ class Ecwid_Shopping_Cart {
 			'<script type="text/javascript"> xProductBrowser('
 			. '"categoriesPerRow=%s",'
 			. '"views=%s",'
- 			. '"categoryView=%s",'
+			. '"categoryView=%s",'
 			. '"searchView=%s",'
 			. '"style="'
 			. $responsive_str
