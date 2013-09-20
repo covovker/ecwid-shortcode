@@ -2,20 +2,20 @@
 
 class Ecwid_Shopping_Cart {
 
-	const demo_store_id = '1003';
-	const ecwid_url     = 'app.ecwid.com';
+	const DEMO_STORE_ID = '1003';
+	const ECWID_URL     = 'app.ecwid.com';
 
-	const max_view_items = 100;
+	const MAX_VIEW_ITEMS = 100;
 
-	const max_categories_per_row     = '25';
-	const default_categories_per_row = '3';
+	const MAX_CATEGORIES_PER_ROW     = '25';
+	const DEFAULT_CATEGORIES_PER_ROW = '3';
 
-	const default_grid_size  = '3,3';
-	const default_list_size  = '10';
-	const default_table_size = '20';
+	const DEFAULT_GRID_SIZE  = '3,3';
+	const DEFAULT_LIST_SIZE  = '10';
+	const DEFAULT_TABLE_SIZE = '20';
 
-	const default_search_view   = 'grid';
-	const default_category_view = 'grid';
+	const DEFAULT_SEARCH_VIEW   = 'grid';
+	const DEFAULT_CATEGORY_VIEW = 'grid';
 
 	public function add_hooks() {
 		if ( ! is_admin() ) {
@@ -42,11 +42,11 @@ class Ecwid_Shopping_Cart {
 	public function shortcode( $attr ) {
 		$args = shortcode_atts(
 			array(
-				'id'                  => self::demo_store_id,
+				'id'                  => self::DEMO_STORE_ID,
 				'widgets'             => 'productbrowser',
-				'categories_per_row'  => self::default_categories_per_row,
-				'search_view'         => self::default_search_view,
-				'category_view'       => self::default_category_view,
+				'categories_per_row'  => self::DEFAULT_CATEGORIES_PER_ROW,
+				'search_view'         => self::DEFAULT_SEARCH_VIEW,
+				'category_view'       => self::DEFAULT_CATEGORY_VIEW,
 				'responsive'          => 'yes',
 				'default_category_id' => 0,
 				// grid, list and table are not reset to defaults because if one does not specify them, then the products view does not include that type of display
@@ -63,9 +63,9 @@ class Ecwid_Shopping_Cart {
 		if ( ! defined( 'ECWID_SCRIPTJS' ) ) {
 			$store_id = intval( $args['id'] );
 			if ( ! $store_id ) {
-				$args['id'] = $store_id = self::demo_store_id;
+				$args['id'] = $store_id = self::DEMO_STORE_ID;
 			}
-			$result .= '<script type="text/javascript" src="//' . self::ecwid_url . '/script.js?' . $store_id . '"></script>';
+			$result .= '<script type="text/javascript" src="//' . self::ECWID_URL . '/script.js?' . $store_id . '"></script>';
 			define( 'ECWID_SCRIPTJS', 'Yep' );
 		}
 
@@ -88,19 +88,21 @@ class Ecwid_Shopping_Cart {
 		// Categories per row
 		$cats_per_row = $this->sanitize_int(
 			$args['categories_per_row'],
-			self::default_categories_per_row,
-			self::max_categories_per_row
+			self::DEFAULT_CATEGORIES_PER_ROW,
+			self::MAX_CATEGORIES_PER_ROW
 		);
 
 		// Views
+		// if only some of 'grid', 'list' and 'table' are specified, then others are not available for customer
+		// otherwise it produces empty value meaning that all three are available with default sizes
 		$views = array();
 
 		$grid = $args['grid'];
 		if ( ! is_null( $grid ) ) {
 			$value = $this->sanitize_grid(
 				$grid,
-				self::default_grid_size,
-				self::max_view_items
+				self::DEFAULT_GRID_SIZE,
+				self::MAX_VIEW_ITEMS
 			);
 
 			$views[] = "grid($value)";
@@ -110,8 +112,8 @@ class Ecwid_Shopping_Cart {
 		if ( ! is_null( $list ) ) {
 			$list = $this->sanitize_int(
 				$list,
-				self::default_list_size,
-				self::max_view_items
+				self::DEFAULT_LIST_SIZE,
+				self::MAX_VIEW_ITEMS
 			);
 
 			$views[] = "list($list)";
@@ -121,8 +123,8 @@ class Ecwid_Shopping_Cart {
 		if ( ! is_null( $table ) ) {
 			$table = $this->sanitize_int(
 				$table,
-				self::default_table_size,
-				self::max_view_items
+				self::DEFAULT_TABLE_SIZE,
+				self::MAX_VIEW_ITEMS
 			);
 
 			$views[] = "table($table)";
@@ -139,7 +141,7 @@ class Ecwid_Shopping_Cart {
 		// Search view
 		$search_view = $this->sanitize_enum(
 			$args['search_view'],
-			self::default_search_view,
+			self::DEFAULT_SEARCH_VIEW,
 			array( 'list', 'grid', 'table' )
 		);
 
@@ -147,30 +149,31 @@ class Ecwid_Shopping_Cart {
 		// Category view
 		$cat_view = $this->sanitize_enum(
 			$args['category_view'],
-			self::default_category_view,
+			self::DEFAULT_CATEGORY_VIEW,
 			array( 'list', 'grid', 'table' )
 		);
 
+
 		// Responsive
-		$responsive     = $args['responsive'];
-		$responsive     = in_array( $responsive, array( 'yes', 'no' ) ) ? $responsive : 'yes';
-		$responsive_str = $responsive == 'yes' ? ',"responsive=yes"' : '';
+		$responsive_code = $args['responsive'] == 'yes' ? ",'responsive=yes'" : '';
+
 
 		// Default category id
 		$default_cat = intval( $args['default_category_id'] );
-		$def_cat_str = $default_cat ? ',"defaultCategoryId=' . $default_cat . '"' : '';
+		$default_category_code = $default_cat ? ",'defaultCategoryId=" . esc_js($default_cat) . "'" : '';
+
 
 		$result = sprintf(
 			'<script type="text/javascript"> xProductBrowser('
-			. '"categoriesPerRow=%s",'
-			. '"views=%s",'
-			. '"categoryView=%s",'
-			. '"searchView=%s",'
-			. '"style="'
-			. $responsive_str
-			. $def_cat_str
-			. '); </script>',
-			$cats_per_row, $views, $cat_view, $search_view
+			. "'categoriesPerRow=%s',"
+			. "'views=%s',"
+			. "'categoryView=%s',"
+			. "'searchView=%s',"
+			. "'style='"
+			. $responsive_code
+			. $default_category_code
+			. "); </script>",
+			esc_js($cats_per_row), esc_js($views), esc_js($cat_view), esc_js($search_view)
 		);
 
 		return $result;
@@ -182,29 +185,28 @@ class Ecwid_Shopping_Cart {
 		$layout_code = '';
 
 		if ( in_array( $layout, array( 'attachToCategories', 'floating', 'Mini', 'MiniAttachToProductBrowser' ) ) ) {
-			$layout_code = ',"layout=' . $layout . '"';
+			$layout_code = ",'layout=" . $layout . "'";
 		}
 
-		$result = '<script type="text/javascript"> xMinicart("style="' . $layout_code . ');</script>';
+		$result = "<script type=\"text/javascript\"> xMinicart('style='" . esc_js($layout_code) . ");</script>";
 
 		return $result;
 	}
 
 	protected function get_widget_categories( $args ) {
-		return '<script type="text/javascript"> xCategories("style=");</script>';
+		return '<script type="text/javascript"> xCategories(\'style=\');</script>';
 	}
 
 	protected function get_widget_vcategories( $args ) {
-		return '<script type="text/javascript"> xVCategories("style=");</script>';
+		return '<script type="text/javascript"> xVCategories(\'style=\');</script>';
 	}
 
-
 	protected function get_widget_search( $args ) {
-		return '<script type="text/javascript"> xSearchPanel("style=");</script>';
+		return '<script type="text/javascript"> xSearchPanel(\'style=\');</script>';
 	}
 
 	/**
-	 * Returns $value if $it is a positive int less than $max; $default otherwise.
+	 * Returns $value if it is a positive int less than $max; $default otherwise.
 	 *
 	 * @param $value
 	 * @param $default
@@ -258,7 +260,7 @@ class Ecwid_Shopping_Cart {
 
 		$sizes = explode( ",", $value );
 		if ( 2 == count( $sizes ) ) {
-			$rows = intval( $sizes[0] );
+			$rows = intval( $sizes	[0] );
 			$cols = intval( $sizes[1] );
 
 			if (
