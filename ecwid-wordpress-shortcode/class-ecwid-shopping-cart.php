@@ -155,7 +155,7 @@ class Ecwid_Shopping_Cart {
 
 
 		// Responsive
-		$responsive_code = $args['responsive'] == 'yes' ? ",'responsive=yes'" : '';
+		$responsive_code = $args['responsive'] != 'no' ? ",'responsive=yes'" : '';
 
 
 		// Default category id

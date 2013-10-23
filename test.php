@@ -28,6 +28,9 @@ function shortcode_atts( $pairs, $atts, $shortcode = '' ) {
         return $out;
 }
 
+function esc_js($value) {
+	return $value;
+}
 // }}}
 
 // {{{ test framework %)
@@ -86,7 +89,7 @@ function get_productbrowser_args($args = array()) {
 		die(var_dump('product browser code is wrong:' . $code));
 	}
 
-	$args = explode('"', $match[1]);
+	$args = explode("'", $match[1]);
 
 	$result = array();
 	foreach ($args as $key => $arg) {
