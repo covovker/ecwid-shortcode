@@ -17,6 +17,14 @@ class Ecwid_Shopping_Cart {
 	const DEFAULT_SEARCH_VIEW   = 'grid';
 	const DEFAULT_CATEGORY_VIEW = 'grid';
 
+	protected $displayed_widgets = array();
+	protected $widgets_displayed_once = array();
+
+	public function Ecwid_Shopping_Cart()
+	{
+		$this->widgets_displayed_once = array( 'productbrowser', 'search' );
+	}
+
 	public function add_hooks() {
 		if ( ! is_admin() ) {
 			add_shortcode( 'ecwid', array( $this, 'shortcode' ) );
@@ -84,8 +92,13 @@ class Ecwid_Shopping_Cart {
 		foreach ( $widgets as $widget ) {
 			$widget = trim( $widget );
 			if ( in_array( $widget, array( 'productbrowser', 'categories', 'vcategories', 'search', 'minicart' ) ) ) {
-				$getter = "get_widget_$widget";
+				if ( in_array( $widget, $this->displayed_widgets ) && in_array ( $widget, $this->widgets_displayed_once ) ) {
+					$getter = "get_duplicate_widget_warning";
+				} else {
+					$getter = "get_widget_$widget";
+				}
 				$result .= $this->$getter( $args );
+				$this->displayed_widgets[] = $widget;
 			}
 		}
 
@@ -214,6 +227,15 @@ class Ecwid_Shopping_Cart {
 
 	protected function get_widget_search( $args ) {
 		return '<script type="text/javascript"> xSearchPanel(\'style=\');</script>';
+	}
+
+	protected function get_duplicate_widget_warning() {
+		return '<div>' . __(
+			'There can be only one Ecwid Product Browser or Ecwid Search widget'
+			. ' on a single page. Please, choose which one should stay on the page'
+			. ' and remove other widgets.',
+			'ecwid-shortcode'
+		) . '</div>';
 	}
 
 	/**
