@@ -20,7 +20,18 @@ class Ecwid_Shopping_Cart {
 	public function add_hooks() {
 		if ( ! is_admin() ) {
 			add_shortcode( 'ecwid', array( $this, 'shortcode' ) );
+		} else {
+			add_filter( 'content_save_pre', array( $this, 'process_ecwid_script_tags' ) );
 		}
+	}
+
+	public function process_ecwid_script_tags( $content ) {
+		require_once ECWID_PLUGIN_DIR . "/class-ecwid-dashboard-to-shortcode-converter.php";
+
+		$reverse = new Ecwid_Dashboard_To_Shortcode_Converter();
+		$content = $reverse->convert( $content );
+
+		return $content;
 	}
 
 	/**
