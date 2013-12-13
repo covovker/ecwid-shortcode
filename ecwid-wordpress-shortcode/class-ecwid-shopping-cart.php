@@ -28,11 +28,11 @@ class Ecwid_Shopping_Cart {
 	public function add_hooks() {
 		if ( ! is_admin() ) {
 			add_shortcode( 'ecwid', array( $this, 'shortcode' ) );
+			add_action('wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		} else {
 			add_filter( 'content_save_pre', array( $this, 'process_ecwid_script_tags' ) );
 		}
 	}
-
 	public function process_ecwid_script_tags( $content ) {
 		require_once ECWID_PLUGIN_DIR . "/class-ecwid-dashboard-to-shortcode-converter.php";
 
@@ -40,6 +40,11 @@ class Ecwid_Shopping_Cart {
 		$content = $reverse->convert( $content );
 
 		return $content;
+	}
+
+	public function enqueue_styles() {
+
+		wp_enqueue_style( 'ecwid-frontend', plugin_dir_url( __FILE__ ) . 'css/frontend.css' );
 	}
 
 	/**
@@ -230,12 +235,20 @@ class Ecwid_Shopping_Cart {
 	}
 
 	protected function get_duplicate_widget_warning() {
-		return '<div>' . __(
+		$header = __( 'Unable to show storefront', 'ecwid-shortcode' );
+		$message = __(
 			'There can be only one Ecwid Product Browser or Ecwid Search widget'
 			. ' on a single page. Please, choose which one should stay on the page'
 			. ' and remove other widgets.',
 			'ecwid-shortcode'
-		) . '</div>';
+		);
+
+		$content = '<div class="ecwid-warning">'
+			. '<div class="header">' . esc_html( $header ) . '</div>'
+			. '<div class="message">' . esc_html( $message ) . '</div>'
+			. '</div>';
+
+		return $content;
 	}
 
 	/**
