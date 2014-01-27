@@ -15,6 +15,5 @@ if ( ! defined( 'ECWID_PLUGIN_DIR' ) ) {
 require_once ECWID_PLUGIN_DIR . "/class-ecwid-shopping-cart.php";
 
 $ecwid = new Ecwid_Shopping_Cart();
-$ecwid->add_hooks();
 
 ?>

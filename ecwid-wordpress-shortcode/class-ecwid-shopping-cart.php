@@ -17,7 +17,12 @@ class Ecwid_Shopping_Cart {
 	const DEFAULT_SEARCH_VIEW   = 'grid';
 	const DEFAULT_CATEGORY_VIEW = 'grid';
 
-	public function add_hooks() {
+	public function __construct()
+	{
+		$this->add_hooks();
+	}
+
+	protected function add_hooks() {
 		if ( ! is_admin() ) {
 			add_shortcode( 'ecwid', array( $this, 'shortcode' ) );
 		} else {
