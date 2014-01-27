@@ -35,7 +35,7 @@ class Ecwid_Shopping_Cart {
 	public function process_ecwid_script_tags( $content ) {
 		require_once ECWID_PLUGIN_DIR . "/class-ecwid-dashboard-to-shortcode-converter.php";
 
-		if (strpos($content, 'app.ecwid.com/script.js')) {
+		if ( strpos( $content, 'app.ecwid.com/script.js' ) ) {
 			$reverse = new Ecwid_Dashboard_To_Shortcode_Converter();
 			$content = $reverse->convert( $content );
 		}
