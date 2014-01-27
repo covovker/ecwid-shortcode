@@ -93,7 +93,7 @@ class Ecwid_Shopping_Cart {
 		foreach ( $widgets as $widget ) {
 			$widget = trim( $widget );
 
-			switch ($widget) {
+			switch ( $widget ) {
 				case 'productbrowser':
 					$result .= $this->get_widget_productbrowser( $args );
 					break;
@@ -223,10 +223,10 @@ class Ecwid_Shopping_Cart {
 		$layout_code = '';
 
 		if ( in_array( $layout, array( 'attachToCategories', 'floating', 'Mini', 'MiniAttachToProductBrowser' ) ) ) {
-			$layout_code = ",'layout=" . $layout . "'";
+			$layout_code = ",'layout=" . esc_js( $layout ) . "'";
 		}
 
-		$result = "<script type=\"text/javascript\"> xMinicart('style='" . esc_js($layout_code) . ");</script>";
+		$result = "<script type=\"text/javascript\"> xMinicart('style='$layout_code);</script>";
 
 		return $result;
 	}
