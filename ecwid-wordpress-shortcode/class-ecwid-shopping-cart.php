@@ -88,9 +88,27 @@ class Ecwid_Shopping_Cart {
 		$widgets = explode( ' ', $args['widgets'] );
 		foreach ( $widgets as $widget ) {
 			$widget = trim( $widget );
-			if ( in_array( $widget, array( 'productbrowser', 'categories', 'vcategories', 'search', 'minicart' ) ) ) {
-				$getter = "get_widget_$widget";
-				$result .= $this->$getter( $args );
+
+			switch ($widget) {
+				case 'productbrowser':
+					$result .= $this->get_widget_productbrowser( $args );
+					break;
+
+				case 'categories':
+					$result .= $this->get_widget_categories( $args );
+					break;
+
+				case 'vcategories':
+					$result .= $this->get_widget_vcategories( $args );
+					break;
+
+				case 'search':
+					$result .= $this->get_widget_search( $args );
+					break;
+
+				case 'minicart':
+					$result .= $this->get_widget_minicart( $args );
+					break;
 			}
 		}
 
