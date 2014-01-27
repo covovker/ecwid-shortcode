@@ -17,22 +17,14 @@ class Ecwid_Shopping_Cart {
 	const DEFAULT_SEARCH_VIEW   = 'grid';
 	const DEFAULT_CATEGORY_VIEW = 'grid';
 
-	protected $displayed_widgets = array();
-	protected $widgets_displayed_once = array();
-
-	public function Ecwid_Shopping_Cart()
-	{
-		$this->widgets_displayed_once = array( 'productbrowser', 'search' );
-	}
-
 	public function add_hooks() {
 		if ( ! is_admin() ) {
 			add_shortcode( 'ecwid', array( $this, 'shortcode' ) );
-			add_action('wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 		} else {
 			add_filter( 'content_save_pre', array( $this, 'process_ecwid_script_tags' ) );
 		}
 	}
+
 	public function process_ecwid_script_tags( $content ) {
 		require_once ECWID_PLUGIN_DIR . "/class-ecwid-dashboard-to-shortcode-converter.php";
 
@@ -40,11 +32,6 @@ class Ecwid_Shopping_Cart {
 		$content = $reverse->convert( $content );
 
 		return $content;
-	}
-
-	public function enqueue_styles() {
-
-		wp_enqueue_style( 'ecwid-frontend', plugin_dir_url( __FILE__ ) . 'css/frontend.css' );
 	}
 
 	/**
@@ -97,13 +84,8 @@ class Ecwid_Shopping_Cart {
 		foreach ( $widgets as $widget ) {
 			$widget = trim( $widget );
 			if ( in_array( $widget, array( 'productbrowser', 'categories', 'vcategories', 'search', 'minicart' ) ) ) {
-				if ( in_array( $widget, $this->displayed_widgets ) && in_array ( $widget, $this->widgets_displayed_once ) ) {
-					$getter = "get_duplicate_widget_warning";
-				} else {
-					$getter = "get_widget_$widget";
-				}
+				$getter = "get_widget_$widget";
 				$result .= $this->$getter( $args );
-				$this->displayed_widgets[] = $widget;
 			}
 		}
 
@@ -232,23 +214,6 @@ class Ecwid_Shopping_Cart {
 
 	protected function get_widget_search( $args ) {
 		return '<script type="text/javascript"> xSearchPanel(\'style=\');</script>';
-	}
-
-	protected function get_duplicate_widget_warning() {
-		$header = __( 'Unable to show storefront', 'ecwid-shortcode' );
-		$message = __(
-			'There can be only one Ecwid Product Browser or Ecwid Search widget'
-			. ' on a single page. Please, choose which one should stay on the page'
-			. ' and remove other widgets.',
-			'ecwid-shortcode'
-		);
-
-		$content = '<div class="ecwid-warning">'
-			. '<div class="header">' . esc_html( $header ) . '</div>'
-			. '<div class="message">' . esc_html( $message ) . '</div>'
-			. '</div>';
-
-		return $content;
 	}
 
 	/**
