@@ -67,11 +67,11 @@ $ecwid = new Ecwid_Shopping_Cart();
 
 
 // {{{ test div...script...js?shopid.. div wrapping
-if (!preg_match('!\s*<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?12345"></script>.*\s*</div>\s*!', $code = $ecwid->shortcode(array('id' => 12345)))) {
+if (!preg_match('!\s*<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?12345&data_platform=wpcom"></script>.*\s*</div>\s*!', $code = $ecwid->shortcode(array('id' => 12345)))) {
 	die("failed wrapping: \n" . $code . "\n");
 }
 
-if (preg_match('!\s*<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?1003"></script>.*\s*</div>\s*!', $code = $ecwid->shortcode(array('id' => 12345)))) {
+if (preg_match('!\s*<div>\s*<script type="text/javascript" src="//app.ecwid.com/script.js\?1003&data_platform=wpcom"></script>.*\s*</div>\s*!', $code = $ecwid->shortcode(array('id' => 12345)))) {
     die("failed remembering script was included before");
 }
 // }}}
