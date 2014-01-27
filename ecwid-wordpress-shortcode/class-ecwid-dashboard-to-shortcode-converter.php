@@ -30,10 +30,11 @@ class Ecwid_Dashboard_To_Shortcode_Converter {
 		$args = '';
 		foreach ( $other_args as $name => $value ) {
 			if ( $name == 'id' ) continue;
-			$args .= "$name=\"$value\" ";
+
+			$args .= sprintf( '%s="%s" ', htmlentities( $name ), htmlentities( $value ) );
 		}
 
-		$result = sprintf( '[ecwid id="%s" %swidgets="%s"]', $id, $args, $type );
+		$result = sprintf( '[ecwid id="%s" %swidgets="%s"]', htmlentities( $id ) , $args, htmlentities( $type ) );
 
 		return $result;
 	}
