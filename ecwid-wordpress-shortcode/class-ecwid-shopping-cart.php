@@ -17,6 +17,8 @@ class Ecwid_Shopping_Cart {
 	const DEFAULT_SEARCH_VIEW   = 'grid';
 	const DEFAULT_CATEGORY_VIEW = 'grid';
 
+	protected $scriptjs_rendered = false;
+
 	public function __construct()
 	{
 		$this->add_hooks();
@@ -78,13 +80,13 @@ class Ecwid_Shopping_Cart {
 
 		$result = '<div>';
 
-		if ( ! defined( 'ECWID_SCRIPTJS' ) ) {
+		if ( ! $this->scriptjs_rendered ) {
 			$store_id = intval( $args['id'] );
 			if ( ! $store_id ) {
 				$args['id'] = $store_id = self::DEMO_STORE_ID;
 			}
 			$result .= '<script type="text/javascript" src="//' . self::ECWID_URL . '/script.js?' . $store_id . '&data_platform=wpcom"></script>';
-			define( 'ECWID_SCRIPTJS', 'Yep' );
+			$this->scriptjs_rendered = true;
 		}
 
 		$widgets = explode( ' ', $args['widgets'] );
