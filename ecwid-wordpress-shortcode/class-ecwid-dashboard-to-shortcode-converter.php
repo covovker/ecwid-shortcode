@@ -132,7 +132,6 @@ class Ecwid_Dashboard_To_Shortcode_Converter {
 
 		if ( ! $found ) return false;
 
-		//die(var_dump($found, $matches));
 		$short_code = $this->build_short_code( $widget, $matches[1], array() );
 
 		return preg_replace( $found, $short_code, $input, 1 );
