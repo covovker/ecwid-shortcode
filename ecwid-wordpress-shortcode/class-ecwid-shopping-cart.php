@@ -14,13 +14,15 @@ class Ecwid_Shopping_Cart {
 	const DEFAULT_LIST_SIZE  = '10';
 	const DEFAULT_TABLE_SIZE = '20';
 
-	const DEFAULT_SEARCH_VIEW   = 'grid';
+	const DEFAULT_SEARCH_VIEW   = 'list';
 	const DEFAULT_CATEGORY_VIEW = 'grid';
 
 	protected $scriptjs_rendered = false;
 
 	public function __construct()
 	{
+		require_once ECWID_PLUGIN_DIR . "/class-ecwid-settings-page.php";
+		$this->settingsPage = new Ecwid_Settings_Page();
 		$this->add_hooks();
 	}
 

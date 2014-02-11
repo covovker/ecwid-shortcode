@@ -1,0 +1,129 @@
+.ecwid-settings {
+	max-width: 650px;
+	padding-left: 6px;
+}
+
+.ecwid-settings .settings-block.complete,
+.ecwid-settings.complete .settings-block.initial
+{
+	display: none;
+}
+
+.ecwid-settings.complete .settings-block.complete {
+	display: block;
+}
+
+.ecwid-settings h3 {
+	font-size: 21px;
+	line-height: 28px;
+	margin-top: 27px;
+	margin-bottom: 7px;
+}
+
+
+.ecwid-settings p {
+	margin: 10px 0px;
+	line-height: 1.4;
+}
+
+.ecwid-settings hr {
+	margin-top: 20px;
+	border-top: 1px solid #cccccc;
+	border-bottom: 0px none;
+}
+
+.ecwid-settings p.note {
+	color: #999999;
+
+}
+
+.ecwid-settings .greeting-box {
+	display: table-row;
+	height: 140px;
+}
+
+.ecwid-settings .greeting-box > div {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.ecwid-settings .greeting-box .image {
+	width: 175px;
+}
+
+.ecwid-settings .image img {
+	display: block;
+}
+
+.ecwid-settings .greeting-box h3 {
+	margin: 0px 0px 6px;
+	line-height: 28px;
+	font-size: 23px;
+	max-width: 400px;
+}
+
+.ecwid-settings .greeting-box p {
+	font-size: 17px;
+	margin: 0px;
+}
+
+.ecwid-settings .buttons {
+	margin-bottom: 18px;
+}
+
+.ecwid-settings a.button {
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 38px;
+	height: 40px;
+	padding: 0px 15px;
+}
+
+.ecwid-settings .buttons .button {
+	margin-right: 20px;
+}
+
+.ecwid-settings label {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.ecwid-settings input,
+.ecwid-settings input.button-primary {
+	height: 35px;
+}
+
+.ecwid-settings input.store-id {
+	width: 155px;
+	font-size: 16px;
+	border-radius: 5px;
+	margin-right: 5px;
+	padding: 7px;
+}
+
+.ecwid-settings input.button-primary {
+	padding: 0px 30px;
+}
+
+.ecwid-settings.complete .greeting-box h3 {
+	font-weight: normal;
+}
+
+.ecwid-settings .greeting-box a {
+	margin-right: 20px;
+}
+
+.ecwid-settings .greeting-box a.secondary {
+	color: #999999;
+}
+
+.ecwid-settings textarea {
+	width: 100%;
+	padding: 14px 18px;
+	resize: none;
+}
+
+.ecwid-settings ul li {
+	list-style-type: disc;
+	list-style-position: inside;
+}

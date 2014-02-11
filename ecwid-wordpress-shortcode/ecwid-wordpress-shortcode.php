@@ -12,6 +12,10 @@ if ( ! defined( 'ECWID_PLUGIN_DIR' ) ) {
 	define( 'ECWID_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 }
 
+if ( ! defined( 'ECWID_PLUGIN_URL' ) ) {
+	define( 'ECWID_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+}
+
 require_once ECWID_PLUGIN_DIR . "/class-ecwid-shopping-cart.php";
 
 $ecwid = new Ecwid_Shopping_Cart();
