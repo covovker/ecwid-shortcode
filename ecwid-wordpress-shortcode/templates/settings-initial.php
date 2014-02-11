@@ -3,8 +3,8 @@
 		<img src="<?php echo ECWID_PLUGIN_URL; ?>/images/store_inprogress.png" width="140" />
 	</div>
 	<div class="text">
-	<h3><?php $this->_e( 'You are almost finished connecting your store to WordPress' ); ?></h3>
-	<p><?php $this->_e( 'Just a few little steps left' ); ?></p>
+	<h3><?php $this->_e( 'Thank you for choosing Ecwid to build your online store' ); ?></h3>
+	<p><?php $this->_e( 'Follow these simple steps to publish your Ecwid store on your site' ); ?></p>
 	</div>
 </div>
 
