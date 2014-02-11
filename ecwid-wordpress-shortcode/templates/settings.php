@@ -13,6 +13,6 @@
 
 	<hr />
 
-	<p><?php $this->_es( 'Questions? Visit <a %s>Ecwid support center</a>.', 'target="_blank" href="http://en.support.wordpress.com/ecwid/"' ); ?></p>
+	<p><?php $this->_es( 'Questions? Visit <a %s>%s</a>.', 'target="_blank" href="http://en.support.wordpress.com/ecwid/"', 'http://en.support.wordpress.com/ecwid/' ); ?></p>
 	</form>
 </div>

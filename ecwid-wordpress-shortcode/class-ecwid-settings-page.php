@@ -43,13 +43,18 @@ class Ecwid_Settings_Page {
 
 	public function register_settings()
 	{
-		register_setting( 'ecwid_options_page', 'ecwid_store_id' );
+		register_setting( 'ecwid_options_page', 'ecwid_store_id', 'abs' );
 	}
 
-	public function register_styles()
+	public function register_styles($hook)
 	{
-		wp_register_style('ecwid-settings-css', ECWID_PLUGIN_URL . '/css/settings.css', array(), '', 'all');
-		wp_enqueue_style('ecwid-settings-css');
+		wp_register_style( 'ecwid-admin-css', ECWID_PLUGIN_URL . '/css/admin.css' );
+		wp_enqueue_style( 'ecwid-admin-css' );
+
+		if ( strpos( $hook, 'ecwid' ) !== false ) {
+			wp_register_style( 'ecwid-settings-css', ECWID_PLUGIN_URL . '/css/settings.css' );
+			wp_enqueue_style( 'ecwid-settings-css' );
+		}
 	}
 
 	protected function _e( $label )

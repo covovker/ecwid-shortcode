@@ -3,6 +3,10 @@
 	padding-left: 6px;
 }
 
+.ecwid-settings h2 {
+	margin-bottom: 15px;
+}
+
 .ecwid-settings .settings-block.complete,
 .ecwid-settings.complete .settings-block.initial
 {
@@ -68,7 +72,7 @@
 }
 
 .ecwid-settings .buttons {
-	margin-bottom: 18px;
+	margin-bottom: 14px;
 }
 
 .ecwid-settings a.button {
@@ -101,6 +105,13 @@
 	padding: 7px;
 }
 
+.ecwid-settings input::-webkit-outer-spin-button,
+.ecwid-settings input::-webkit-inner-spin-button {
+	/* display: none; <- Crashes Chrome on hover */
+	-webkit-appearance: none;
+	margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
 .ecwid-settings input.button-primary {
 	padding: 0px 30px;
 }
@@ -110,20 +121,91 @@
 }
 
 .ecwid-settings .greeting-box a {
-	margin-right: 20px;
+	margin-right: 15px;
 }
 
 .ecwid-settings .greeting-box a.secondary {
 	color: #999999;
 }
 
-.ecwid-settings textarea {
+.ecwid-settings .shortcode {
 	width: 100%;
 	padding: 14px 18px;
 	resize: none;
+	font-family: Consolas, monaco, courier, monospace;
+	margin-top: 7px;
 }
 
-.ecwid-settings ul li {
-	list-style-type: disc;
+.ecwid-settings h4 {
+	font-weight: normal;
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+.ecwid-settings ol {
+	margin-left: 0px;
 	list-style-position: inside;
+	margin-top: 0px;
+}
+
+@media screen and (max-width: 650px) {
+	.ecwid-settings {
+		padding: 0px;
+	}
+
+	.ecwid-settings h2 {
+		margin-bottom: 0px;
+	}
+
+	.ecwid-settings h2,
+	.ecwid-settings .greeting-box {
+		text-align: center;
+		padding-right: 0px;
+	}
+
+	.ecwid-settings .greeting-box {
+		width: 100%;
+		display: inline-block;
+		height: auto;
+	}
+
+	.ecwid-settings .greeting-box > div {
+		display: block;
+		width: 100%;
+	}
+
+	.ecwid-settings .greeting-box h3 {
+		font-size: 17px;
+		margin-top: 7px;
+		line-height: 20px;
+	}
+
+	.ecwid-settings .greeting-box p {
+		font-size: inherit;
+	}
+
+	.ecwid-settings .greeting-box a {
+		margin: 10px;
+		display: block;
+	}
+
+	.ecwid-settings .greeting-box div.image {
+		display: none;
+	}
+
+	.ecwid-settings .button {
+		width: 100%;
+		text-align: center;
+	}
+
+	.ecwid-settings input.store-id {
+		width: 100%;
+		margin-bottom: 8px;
+	}
+
+	.ecwid-settings .shortcode {
+		height: 130px;
+		font-size: 14px;
+		padding: 5px;
+	}
 }

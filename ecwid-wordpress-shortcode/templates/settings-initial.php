@@ -3,8 +3,8 @@
 		<img src="<?php echo ECWID_PLUGIN_URL; ?>/images/store_inprogress.png" width="140" />
 	</div>
 	<div class="text">
-	<h3><?php $this->_e( 'You are almost finished connecting your store to WordPress.' ); ?></h3>
-	<p><?php $this->_e( 'Just a few little steps left.' ); ?></p>
+	<h3><?php $this->_e( 'You are almost finished connecting your store to WordPress' ); ?></h3>
+	<p><?php $this->_e( 'Just a few little steps left' ); ?></p>
 	</div>
 </div>
 
@@ -33,7 +33,7 @@
 <p>
 	<?php $this->_es(
 		'Store ID is a unique identifier of any Ecwid store, it consists of several digits. You can find it on the "Dashboard" page of <a %s>Ecwid control panel</a>. Also the Store ID will be sent in the Welcome email after the registration at Ecwid.',
-		'href="https://my.ecwid.com/cp/CP.html" target="_blank"'
+		'href="https://my.ecwid.com/cp/?source=wpcom#t1=&t2=Dashboard" target="_blank"'
 	);
 	?>
 </p>
@@ -42,7 +42,7 @@
 		<?php $this->_e('Enter your store id here:'); ?>
 	</label>
 	<input
-		type="text"
+		type="number"
 		name="ecwid_store_id"
 		value="<?php echo esc_attr( get_option( 'ecwid_store_id' ) ); ?>"
 		class="store-id"
