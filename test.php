@@ -15,6 +15,13 @@ function plugin_dir_path($arg) {
 	return __DIR__ . '/ecwid-wordpress-shortcode';
 }
 
+function plugin_dir_url() {
+	return '';
+}
+
+function add_action() {
+}
+
 function shortcode_atts( $pairs, $atts, $shortcode = '' ) {
         $atts = (array)$atts;
         $out = array();
@@ -121,7 +128,7 @@ check_productbrowser(
 		"categoriesPerRow=3", 
 		"views=", 
 		"categoryView=grid", 
-		"searchView=grid",
+		"searchView=list",
 		"style=",
 		"responsive=yes"
 	), 
@@ -136,7 +143,7 @@ check_productbrowser(
         "categoriesPerRow=12", 
         "views=", 
         "categoryView=grid", 
-        "searchView=grid", 
+        "searchView=list", 
         "style=",
         "responsive=yes"
     ),  
@@ -149,7 +156,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=", 
         "categoryView=grid", 
-        "searchView=grid", 
+        "searchView=list", 
         "style=",
         "responsive=yes"
     ),  
@@ -162,7 +169,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=", 
         "categoryView=grid", 
-        "searchView=grid", 
+        "searchView=list", 
         "style=",
         "responsive=yes"
     ),  
@@ -179,7 +186,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=grid(5,5)", 
         "categoryView=grid", 
-        "searchView=grid", 
+        "searchView=list", 
         "style=",
         "responsive=yes"
     ),  
@@ -192,7 +199,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=grid(3,3)",
         "categoryView=grid", 
-        "searchView=grid", 
+        "searchView=list", 
         "style=",
         "responsive=yes"
     ),  
@@ -205,7 +212,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=grid(3,3)",
         "categoryView=grid", 
-        "searchView=grid", 
+        "searchView=list", 
         "style=",
         "responsive=yes"
     ),  
@@ -218,7 +225,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=grid(3,3)",
         "categoryView=grid", 
-        "searchView=grid", 
+        "searchView=list", 
         "style=",
         "responsive=yes"
     ),  
@@ -231,7 +238,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=grid(3,3)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -244,7 +251,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=grid(3,3)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -257,7 +264,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=grid(3,3)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -270,7 +277,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=grid(3,3)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -283,7 +290,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=grid(3,3)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -298,7 +305,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=list(25)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -311,7 +318,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=list(10)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -324,7 +331,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=list(10)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -337,7 +344,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=list(10)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),  
@@ -350,7 +357,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=list(10)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),  
@@ -365,7 +372,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=table(25)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),  
@@ -378,7 +385,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=table(20)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -391,7 +398,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=table(20)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -404,7 +411,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=table(20)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -417,7 +424,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=table(20)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -432,7 +439,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=grid(6,8) list(5) table(15)",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -447,7 +454,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -460,7 +467,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=list",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -473,7 +480,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=table",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -486,7 +493,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -499,7 +506,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -553,7 +560,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -566,7 +573,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
@@ -582,7 +589,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
 	"responsive=yes"
     ),
@@ -595,7 +602,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
     ),
     "check no responsive"
@@ -607,7 +614,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
 	"responsive=yes"
     ),
@@ -620,7 +627,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
 	"responsive=yes"
     ),
@@ -635,7 +642,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes",
         "defaultCategoryId=123456"
@@ -649,7 +656,7 @@ check_productbrowser(
         "categoriesPerRow=3",
         "views=",
         "categoryView=grid",
-        "searchView=grid",
+        "searchView=list",
         "style=",
         "responsive=yes"
     ),
