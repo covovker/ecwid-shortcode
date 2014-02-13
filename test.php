@@ -38,6 +38,10 @@ function shortcode_atts( $pairs, $atts, $shortcode = '' ) {
 function esc_js($value) {
 	return $value;
 }
+
+function esc_url($val) {
+	return $val;
+}
 // }}}
 
 // {{{ test framework %)

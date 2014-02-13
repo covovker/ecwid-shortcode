@@ -1,5 +1,5 @@
 <div class="wrap ecwid-settings <?php if ( get_option( 'ecwid_store_id' ) ) echo 'complete'; ?>">
-	<h2><?php echo $this->get_page_title(); ?></h2>
+	<h2><?php echo esc_html( $this->get_page_title() ); ?></h2>
 	<form method="POST" action="options.php">
 	<?php settings_fields( 'ecwid_options_page' ); ?>
 
@@ -13,6 +13,6 @@
 
 	<hr />
 
-	<p><?php $this->_es( 'Questions? Visit <a %s>%s</a>', 'target="_blank" href="http://en.support.wordpress.com/ecwid/"', 'http://en.support.wordpress.com/ecwid/' ); ?></p>
+	<p><?php echo sprintf( __( 'Questions? Visit <a %s>%s</a>', 'ecwid-wordpress-shortcode' ), 'target="_blank" href="http://en.support.wordpress.com/ecwid/"', 'http://en.support.wordpress.com/ecwid/' ); ?></p>
 	</form>
 </div>

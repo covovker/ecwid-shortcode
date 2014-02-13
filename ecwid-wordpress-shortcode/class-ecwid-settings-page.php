@@ -11,12 +11,12 @@ class Ecwid_Settings_Page {
 	{
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action('admin_enqueue_scripts', array( $this, 'register_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_styles' ) );
 	}
 
 	public function add_admin_menu()
 	{
-		add_menu_page(
+		add_options_page(
 			$this->get_page_title(),
 			__( 'Ecwid Store', 'ecwid-wordpress-shortcode' ),
 			'manage_options',
@@ -34,7 +34,7 @@ class Ecwid_Settings_Page {
 	{
 		static $page_title;
 
-		if (!$page_title) {
+		if ( !$page_title ) {
 			$page_title = __( 'Ecwid Shopping Cart', 'ecwid-wordpress_shortcode' );
 		}
 
@@ -48,29 +48,8 @@ class Ecwid_Settings_Page {
 
 	public function register_styles($hook)
 	{
-		wp_register_style( 'ecwid-admin-css', ECWID_PLUGIN_URL . '/css/admin.css' );
-		wp_enqueue_style( 'ecwid-admin-css' );
-
 		if ( strpos( $hook, 'ecwid' ) !== false ) {
-			wp_register_style( 'ecwid-settings-css', ECWID_PLUGIN_URL . '/css/settings.css' );
-			wp_enqueue_style( 'ecwid-settings-css' );
+			wp_enqueue_style( 'ecwid-settings-css', ECWID_PLUGIN_URL . '/css/settings.css' );
 		}
-	}
-
-	protected function _e( $label )
-	{
-		echo $this->__( $label );
-	}
-
-	protected function __( $label )
-	{
-		return __( $label, 'ecwid-wordpress-shortcode' );
-	}
-
-	protected function _es ($label )
-	{
-		$args = func_get_args();
-		$args[0] = $this->__( $args[0] );
-		echo call_user_func_array( 'sprintf', $args );
 	}
 }

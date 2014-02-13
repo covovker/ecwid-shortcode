@@ -87,7 +87,8 @@ class Ecwid_Shopping_Cart {
 			if ( ! $store_id ) {
 				$args['id'] = $store_id = self::DEMO_STORE_ID;
 			}
-			$result .= '<script type="text/javascript" src="//' . self::ECWID_URL . '/script.js?' . $store_id . '&data_platform=wpcom"></script>';
+			$url = '//' . self::ECWID_URL . '/script.js?' . $store_id . '&data_platform=wpcom';
+			$result .= '<script type="text/javascript" src="' . esc_url( $url ) . '"></script>';
 			$this->scriptjs_rendered = true;
 		}
 
