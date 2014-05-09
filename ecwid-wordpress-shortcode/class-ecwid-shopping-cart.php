@@ -60,11 +60,11 @@ class Ecwid_Shopping_Cart {
 	 *
 	 * More information about widgets attributes of certain widgets can be found here: http://kb.ecwid.com/w/page/15853259/Ecwid%20widgets
 	 *
-	 * @param $args
+	 * @param $attributes
 	 *
 	 * @return string
 	 */
-	public function shortcode( $attr ) {
+	public function ecwid_shortcode( $attributes ) {
 		$args = shortcode_atts(
 			array(
 				'id'                  => self::DEMO_STORE_ID,
@@ -323,14 +323,14 @@ class Ecwid_Shopping_Cart {
 
 	protected function get_widget_minicart( $args ) {
 
-		$layout      = $args['layout'];
+		$layout      = isset($args['layout']) ? $args['layout'] : '';
 		$layout_code = '';
 
 		if ( in_array( $layout, array( 'attachToCategories', 'floating', 'Mini', 'MiniAttachToProductBrowser' ) ) ) {
 			$layout_code = ",'layout=" . esc_js( $layout ) . "'";
 		}
 
-		$result = "<script type=\"text/javascript\"> xMinicart('style='$layout_code);</script>";
+		$result = '<script type="text/javascript"> xMinicart("style="' . $layout_code. ');</script>';
 
 		return $result;
 	}
