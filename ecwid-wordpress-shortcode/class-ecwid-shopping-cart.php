@@ -74,6 +74,7 @@ class Ecwid_Shopping_Cart {
 				'category_view'       => self::DEFAULT_CATEGORY_VIEW,
 				'responsive'          => 'yes',
 				'default_category_id' => 0,
+				'layout'			  => '',
 				// grid, list and table are not reset to defaults because if one does not specify them, then the products view does not include that type of display
 				'grid'                => null,
 				'table'               => null,
