@@ -324,11 +324,15 @@ class Ecwid_Shopping_Cart {
 
 	protected function get_widget_minicart( $args ) {
 
-		$layout      = isset($args['layout']) ? $args['layout'] : '';
+		$layout      = strtolower( isset($args['layout']) ? $args['layout'] : '' );
 		$layout_code = '';
 
-		if ( in_array( $layout, array( 'attachToCategories', 'floating', 'Mini', 'MiniAttachToProductBrowser' ) ) ) {
-			$layout_code = ",'layout=" . esc_js( $layout ) . "'";
+		$valid_layouts = array( 'attachToCategories', 'floating', 'Mini', 'MiniAttachToProductBrowser' );
+
+		foreach ( $valid_layouts as $valid ) {
+			if ( strtolower( $valid ) == $layout ) {
+				$layout_code = ",'layout=" . esc_js( $valid ) . "'";
+			}
 		}
 
 		$result = '<script type="text/javascript"> xMinicart("style="' . $layout_code. ');</script>';
